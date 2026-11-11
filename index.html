@@ -1,0 +1,255 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AttendPro - Attendance Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-page">
+    <div class="login-card">
+        <div class="logo">AP</div>
+        <h1>AttendPro</h1>
+        <p>College Attendance Management</p>
+
+        <form id="loginForm">
+            <input type="text" id="username"
+                placeholder="Username" required>
+
+            <input type="password" id="password"
+                placeholder="Password" required>
+
+            <button type="submit">Login to Dashboard</button>
+        </form>
+
+        <p class="demo">Demo: admin / admin123</p>
+        <p id="loginError" class="error"></p>
+    </div>
+</div>
+
+<!-- MAIN APPLICATION -->
+<div id="app" class="app hidden">
+
+    <aside class="sidebar">
+        <div class="brand">📚 AttendPro</div>
+
+        <div class="menu">
+            <button class="nav-btn active" data-page="dashboard">🏠 Dashboard</button>
+            <button class="nav-btn" data-page="students">👨‍🎓 Students</button>
+            <button class="nav-btn" data-page="attendance">📝 Attendance</button>
+            <button class="nav-btn" data-page="reports">📊 Monthly Reports</button>
+            <button class="nav-btn" data-page="calendar">📅 Calendar</button>
+        </div>
+
+        <div class="sidebar-bottom">
+            <button id="themeBtn">🌙 Dark Mode</button>
+            <button id="logoutBtn">↪ Logout</button>
+        </div>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h2 id="pageTitle">Dashboard</h2>
+                <p>Welcome to your attendance system</p>
+            </div>
+
+            <div class="admin">
+                <span>👤 Sibu Verma</span>
+            </div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="page">
+            <div class="welcome">
+                <div>
+                    <h2>Welcome to AttendPro!</h2>
+                    <p>Manage your college attendance easily.</p>
+                </div>
+                <span>🎓</span>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <p>Total Students</p>
+                    <h2 id="totalStudents">0</h2>
+                    <span>👨‍🎓</span>
+                </div>
+
+                <div class="stat-card green">
+                    <p>Present Today</p>
+                    <h2 id="totalPresent">0</h2>
+                    <span>✅</span>
+                </div>
+
+                <div class="stat-card red">
+                    <p>Absent Today</p>
+                    <h2 id="totalAbsent">0</h2>
+                    <span>❌</span>
+                </div>
+
+                <div class="stat-card purple">
+                    <p>Attendance Rate</p>
+                    <h2 id="attendanceRate">0%</h2>
+                    <span>📈</span>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>Today's Attendance</h3>
+                <p id="dashboardDate"></p>
+                <div class="progress">
+                    <div id="progressBar"></div>
+                </div>
+                <p id="progressText">0% Attendance</p>
+            </div>
+
+            <div class="panel">
+                <h3>⚠️ Low Attendance Alerts</h3>
+                <div id="lowAlerts">No low attendance alerts.</div>
+            </div>
+        </section>
+
+        <!-- STUDENTS -->
+        <section id="students" class="page hidden">
+            <div class="panel">
+                <h3>Add New Student</h3>
+
+                <form id="studentForm" class="student-form">
+                    <input id="studentName" placeholder="Student Name" required>
+                    <input id="rollNumber" placeholder="Roll Number" required>
+                    <button type="submit">+ Add Student</button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <div class="section-heading">
+                    <h3>Student List</h3>
+                    <input id="studentSearch" placeholder="Search student...">
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Student Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATTENDANCE -->
+        <section id="attendance" class="page hidden">
+            <div class="panel">
+                <h3>Mark Student Attendance</h3>
+
+                <div class="filters">
+                    <div>
+                        <label>Date</label>
+                        <input type="date" id="attendanceDate">
+                    </div>
+
+                    <div>
+                        <label>Subject</label>
+                        <select id="subjectSelect"></select>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Mark Attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTable"></tbody>
+                    </table>
+                </div>
+
+                <button id="saveAttendance" class="primary-btn">
+                    💾 Save Attendance
+                </button>
+            </div>
+        </section>
+
+        <!-- MONTHLY REPORT -->
+        <section id="reports" class="page hidden">
+            <div class="panel">
+                <h3>Monthly Attendance Report</h3>
+
+                <div class="filters">
+                    <div>
+                        <label>Select Month</label>
+                        <input type="month" id="reportMonth">
+                    </div>
+
+                    <div>
+                        <label>Subject</label>
+                        <select id="reportSubject"></select>
+                    </div>
+
+                    <button id="exportBtn">⬇ Download Excel CSV</button>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Student</th>
+                                <th>Present</th>
+                                <th>Absent</th>
+                                <th>Total Classes</th>
+                                <th>Percentage</th>
+                                <th>Alert</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALENDAR -->
+        <section id="calendar" class="page hidden">
+            <div class="panel">
+                <h3>Attendance Calendar</h3>
+
+                <div class="calendar-controls">
+                    <button id="prevMonth">←</button>
+                    <h3 id="calendarTitle"></h3>
+                    <button id="nextMonth">→</button>
+                </div>
+
+                <div class="calendar-grid" id="calendarGrid"></div>
+
+                <p class="calendar-legend">
+                    🟢 Present &nbsp; 🔴 Absent &nbsp; ⚪ No record
+                </p>
+                <p id="calendarInfo"></p>
+            </div>
+        </section>
+
+        <footer>
+            AttendPro © 2026 | College Attendance Management System
+        </footer>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
